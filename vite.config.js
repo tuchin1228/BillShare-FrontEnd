@@ -16,7 +16,7 @@ export default defineConfig({
   },
   define: {
     'process.env': {
-      API_URL: "http://localhost:5197"
+      API_URL: "http://billshare.3b8.site"
     },
   },
   resolve: {
