@@ -1,8 +1,5 @@
 # 分帳系統
 
-This template should help get you started developing with Vue 3 in Vite.
-
-
 ### Demo
 
 <a href="<http://share.3b8.site/>" target="_blank">http://share.3b8.site/</a><br/>
