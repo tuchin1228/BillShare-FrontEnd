@@ -172,7 +172,7 @@ const Login = async () => {
     )
     .catch(function (error) {
       if (error.response.status == 400) {
-        alert("參數錯誤");
+        alert("登入失敗");
         cookies.remove("token");
       }
     });

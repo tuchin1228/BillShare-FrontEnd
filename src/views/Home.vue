@@ -69,9 +69,9 @@ const RemoveExpend = async (ExpendId) => {
   }
 };
 
-
 // 取得群組資訊(驗證碼)
 const GetGroupInfo = async () => {
+  console.log('GetGroupInfo');
   let res = await axios
     .get(`${process.env.API_URL}/api/Group/GetGroup/${groupId.value}`, {
       headers: {
@@ -81,20 +81,21 @@ const GetGroupInfo = async () => {
     .catch(function (error) {
       if (error.response.status == 401) {
         alert("會員驗證錯誤");
-        cookies.remove("token");
-        router.push({ path: "/login" });
       }
+
+      cookies.remove("token");
+      router.push({ path: "/login" });
     });
   console.log(res);
   if (res.data.success) {
     groupInfo.value = res.data.group;
-  }
+  } 
 };
 
-onMounted(() => {
+onMounted(async() => {
   groupId.value = route.params.groupId;
-  GetGroupInfo()
-  GetExpendData();
+  await GetGroupInfo();
+  await GetExpendData();
 });
 </script>
 
@@ -104,7 +105,9 @@ onMounted(() => {
       <h2 class="text-center text-3xl py-2 font-bold bg-blue-400 text-white">
         群組動態
       </h2>
-      <p class="p-1 text-lg bg-gray-200 mb-3">{{groupInfo.groupAnnouncement}}</p>
+      <p class="p-1 text-lg bg-gray-200 mb-3">
+        {{ groupInfo.groupAnnouncement }}
+      </p>
     </div>
     <div class="my-2 p-1 grid grid-cols-2 md:grid-cols-5 gap-2">
       <RouterLink
