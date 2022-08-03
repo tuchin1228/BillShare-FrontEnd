@@ -124,7 +124,7 @@
       "
       data-mdb-ripple="true"
       data-mdb-ripple-color="light"
-      @click="Login"
+      @click="Register"
     >
       確認註冊
     </button>
@@ -192,10 +192,39 @@ const Register = async () => {
       }
     });
   console.log(res);
-  //   if (res.data.success) {
-  //     cookies.set("token", res.data.token);
-  //     router.push({ name: "grouplist" });
-  //   }
+  if (res.data.success) {
+    Login();
+    //   cookies.set("token", res.data.token);
+    //   router.push({ name: "grouplist" });
+  }
+};
+
+const Login = async () => {
+  // console.log(UserId.value);
+  let res = await axios
+    .post(
+      `${process.env.API_URL}/api/Login/Login`,
+      {
+        UserId: account.value,
+        Password: password.value,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .catch(function (error) {
+      if (error.response.status == 400) {
+        alert("參數錯誤");
+        cookies.remove("token");
+      }
+    });
+  console.log(res);
+  if (res.data.success) {
+    cookies.set("token", res.data.token);
+    router.push({ name: "grouplist" });
+  }
 };
 </script>
 

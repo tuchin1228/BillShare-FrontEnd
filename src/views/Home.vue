@@ -8,6 +8,7 @@ const { cookies } = useCookies();
 const router = useRouter();
 const route = useRoute();
 
+let groupInfo = ref({});
 let ExpendData = reactive([]);
 let groupId = ref();
 
@@ -32,26 +33,67 @@ async function GetExpendData() {
   // console.log(res);
   if (res.data.success) {
     console.log("res.data.expends", res.data.expends);
-    ExpendData = Object.assign(ExpendData, res.data.expends);
+    Object.assign(ExpendData, res.data.expends);
   } else {
     cookies.remove("token");
     router.push({ path: "/login" });
   }
 }
 
-// const FormatDateTime = (datetime) => {
-//   let date = new Date(datetime);
-//   return `${date.getFullYear()}-${
-//     date.getMonth() + 1 > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1)
-//   }-${date.getDate() > 9 ? date.getDate() : "0" + date.getDate()} ${
-//     date.getHours() > 9 ? date.getHours() : "0" + date.getHours()
-//   }:${date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes()}:${
-//     date.getSeconds() > 9 ? date.getSeconds() : "0" + date.getSeconds()
-//   }`;
-// };
+const RemoveExpend = async (ExpendId) => {
+  let res = await axios
+    .post(
+      `${process.env.API_URL}/api/Expend/DeleteExpend/${ExpendId}`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.get("token")}`,
+        },
+      }
+    )
+    .catch(function (error) {
+      if (error.response == 401) {
+        alert("會員驗證錯誤");
+        cookies.remove("token");
+        router.push({ path: "/login" });
+      } else {
+        cookies.remove("token");
+        router.push({ path: "/login" });
+      }
+    });
+  console.log(res);
+  if (res.data.success) {
+    location.reload();
+    // GetExpendData();
+  }
+};
+
+
+// 取得群組資訊(驗證碼)
+const GetGroupInfo = async () => {
+  let res = await axios
+    .get(`${process.env.API_URL}/api/Group/GetGroup/${groupId.value}`, {
+      headers: {
+        Authorization: `Bearer ${cookies.get("token")}`,
+      },
+    })
+    .catch(function (error) {
+      if (error.response.status == 401) {
+        alert("會員驗證錯誤");
+        cookies.remove("token");
+        router.push({ path: "/login" });
+      }
+    });
+  console.log(res);
+  if (res.data.success) {
+    groupInfo.value = res.data.group;
+  }
+};
 
 onMounted(() => {
   groupId.value = route.params.groupId;
+  GetGroupInfo()
   GetExpendData();
 });
 </script>
@@ -62,8 +104,9 @@ onMounted(() => {
       <h2 class="text-center text-3xl py-2 font-bold bg-blue-400 text-white">
         群組動態
       </h2>
+      <p class="p-1 text-lg bg-gray-200 mb-3">{{groupInfo.groupAnnouncement}}</p>
     </div>
-    <div class="my-2 p-1 grid grid-cols-2 md:grid-cols-4 gap-2">
+    <div class="my-2 p-1 grid grid-cols-2 md:grid-cols-5 gap-2">
       <RouterLink
         :to="{ name: 'grouplist' }"
         class="
@@ -160,6 +203,30 @@ onMounted(() => {
         "
         >新增團員</RouterLink
       >
+      <RouterLink
+        :to="{ name: 'editGroup' }"
+        class="
+          block
+          text-center
+          p-1
+          bg-orange-500
+          text-white
+          font-medium
+          leading-snug
+          uppercase
+          rounded
+          shadow-md
+          hover:bg-orange-600 hover:shadow-lg
+          focus:bg-orange-600 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-orange-700 active:shadow-lg
+          transition
+          duration-150
+          ease-in-out
+          w-full
+          text-xl
+        "
+        >編輯群組</RouterLink
+      >
     </div>
     <div>
       <article
@@ -175,31 +242,60 @@ onMounted(() => {
         <p class="text-right">
           {{ FormatDateTime(item.createdDate) }}
         </p>
-        <RouterLink
-          class="
-            block
-            my-1
-            text-center
-            p-1
-            bg-blue-400
-            text-white
-            font-medium
-            leading-snug
-            uppercase
-            rounded
-            shadow-md
-            hover:bg-blue-500 hover:shadow-lg
-            focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0
-            active:bg-blue-600 active:shadow-lg
-            transition
-            duration-150
-            ease-in-out
-            w-full
-            text-xl
-          "
-          :to="{ name: 'details', params: { expendId: item.expendId } }"
-          >詳情</RouterLink
-        >
+        <div class="grid grid-cols-2 gap-2">
+          <RouterLink
+            class="
+              block
+              my-1
+              text-center
+              p-1
+              bg-blue-400
+              text-white
+              font-medium
+              leading-snug
+              uppercase
+              rounded
+              shadow-md
+              hover:bg-blue-500 hover:shadow-lg
+              focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-600 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+              w-full
+              text-xl
+            "
+            :to="{ name: 'details', params: { expendId: item.expendId } }"
+            >詳情</RouterLink
+          >
+          <button
+            type="button"
+            @click="RemoveExpend(item.expendId)"
+            class="
+              block
+              my-1
+              text-center
+              p-1
+              bg-red-400
+              text-white
+              font-medium
+              leading-snug
+              uppercase
+              rounded
+              shadow-md
+              hover:bg-red-500 hover:shadow-lg
+              focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-red-600 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+              w-full
+              text-xl
+            "
+          >
+            刪除
+          </button>
+        </div>
       </article>
     </div>
   </main>

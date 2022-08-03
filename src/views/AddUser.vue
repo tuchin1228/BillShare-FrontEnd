@@ -103,7 +103,7 @@ let ValidateCode = ref("");
 let groupInfo = ref({});
 
 let GroupUsers = reactive([]); //群組所有人
-let InviteUrl = ref(`${location.host}/invite/`);
+let InviteUrl = ref(`${location.host}/#/invite/`);
 
 // 取得群組所有使用者
 const GetGroupUsers = async () => {
@@ -184,7 +184,8 @@ const removeGroupUser = async (userId) => {
     });
   console.log(res);
   if (res.data.success) {
-    await GetGroupUsers();
+    // await GetGroupUsers();
+    location.reload();
   }
 };
 

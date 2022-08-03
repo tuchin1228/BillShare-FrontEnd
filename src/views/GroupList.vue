@@ -27,7 +27,7 @@
               )`,
             }
           : {
-              background: 'blue',
+              background: '#e1e1e1',
             },
         { height: '200px' ,backgroundPosition:'center',backgroundSize:'cover' },
       ]"

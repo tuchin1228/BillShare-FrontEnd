@@ -1,6 +1,7 @@
 import {
   createRouter,
-  createWebHistory
+  createWebHistory,
+  createWebHashHistory
 } from 'vue-router'
 import {
   useCookies
@@ -15,6 +16,7 @@ import Register from '../views/Register.vue'
 import GroupList from '../views/GroupList.vue'
 import Invite from '../views/Invite.vue'
 import AddGroup from '../views/AddGroup.vue'
+import EditGroup from '../views/EditGroup.vue'
 
 const {
   cookies
@@ -22,7 +24,8 @@ const {
 
 
 const router = createRouter({
-  history: createWebHistory(),
+  // base: '/BillShare-FrontEnd/',
+  history: createWebHashHistory(),
   // history: createWebHistory(
   //   import.meta.env.BASE_URL),
   routes: [
@@ -32,6 +35,7 @@ const router = createRouter({
       name: 'grouplist',
       component: GroupList
     },
+   
     {
       path: '/invite/:GroupId/:ValidateCode',
       name: 'invite',
@@ -51,6 +55,11 @@ const router = createRouter({
       path: '/addGroup',
       name: 'addGroup',
       component: AddGroup
+    },
+    {
+      path: '/:groupId/editGroup',
+      name: 'editGroup',
+      component: EditGroup
     },
     {
       path: '/:groupId/details/:expendId',

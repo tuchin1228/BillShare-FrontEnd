@@ -8,7 +8,7 @@
       <RouterLink :to="{ name: 'register' }">前往註冊</RouterLink>
     </div>
   </main> -->
-  <form class="max-w-xl mx-auto">
+  <form class="mx-auto">
     <!-- Email input -->
     <div class="mb-6">
       <label for="" class="text-xl font-bold my-2 block">帳號：</label>

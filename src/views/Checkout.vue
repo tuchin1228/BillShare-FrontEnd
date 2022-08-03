@@ -193,7 +193,7 @@ const GetReceiveUser = (sendUserId, reactiveUserId) => {
   let send = GroupUsers.filter((user) => user.userId == sendUserId);
   let receive = GroupUsers.filter((user) => user.userId == reactiveUserId);
   if (send && receive) {
-    return `<span class="text-blue-600 font-bold">${send[0].userName}</span> 還 <span class="text-blue-600 font-bold">${receive[0].userName}</span>`;
+    return `<span class="text-blue-600 font-bold">${send[0].userName}</span> 給 <span class="text-blue-600 font-bold">${receive[0].userName}</span>`;
   }
 };
 
@@ -226,6 +226,31 @@ const ReturnPay = async (sendUser, receiveUser, price) => {
   if (res.data.success) {
     await GetReceiveData();
     await CalcUsersPrice();
+  }
+};
+
+const DeleteCheckout = async (CheckoutId) => {
+  let res = await axios
+    .post(
+      `${process.env.API_URL}/api/checkout/DeleteCheckout/${CheckoutId}`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.get("token")}`,
+        },
+      }
+    )
+    .catch(function (error) {
+      if (error.response.status == 401) {
+        alert("會員驗證錯誤");
+        cookies.remove("token");
+        router.push({ path: "/login" });
+      }
+    });
+  console.log(res);
+  if(res.data.success){
+    location.reload()
   }
 };
 
@@ -326,8 +351,8 @@ onMounted(async () => {
             justify-between
             items-center
             my-1
-            py-1
             border-b border-gray-200
+            py-2
           "
         >
           <div>
@@ -339,7 +364,38 @@ onMounted(async () => {
               FormatDateTime(item.createdDate)
             }}</span>
           </div>
-          <span class="text-red-600 font-bold">{{ item.amount }}元</span>
+          <span>
+            <span class="text-red-600 font-bold block text-center"
+              >{{ item.amount }}元</span
+            >
+            <button
+              type="button"
+              @click="DeleteCheckout(item.id)"
+              v-if="userId == item.sendUserId"
+              class="
+                block
+                text-center
+                p-1
+                bg-red-400
+                text-white
+                leading-snug
+                uppercase
+                rounded
+                font-bold
+                shadow-md
+                hover:bg-red-500 hover:shadow-lg
+                focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0
+                active:bg-red-600 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+                w-full
+                text-lg
+              "
+            >
+              刪除還款
+            </button>
+          </span>
           <!-- {{item.sendUserId}} 還 {{item.receiveUserId}} {{item.amount}}元 -->
         </li>
       </ul>
