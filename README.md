@@ -30,12 +30,16 @@
 
 ### 畫面截圖
 ![image](https://user-images.githubusercontent.com/51053467/182651770-9b1ca92f-da00-40b4-ae86-288ecfff2f42.png)
+- - -
 
 ![image](https://user-images.githubusercontent.com/51053467/182652603-0fbc48b0-de2c-4854-99cd-e97f0f50e6ad.png)
+- - -
 
 ![image](https://user-images.githubusercontent.com/51053467/182652696-fb72562a-8675-4ae6-8056-eb5a1c27d466.png)
+- - -
 
 ![image](https://user-images.githubusercontent.com/51053467/182652755-df47d1d3-0e91-4b78-a521-c3198dd3fdaf.png)
+- - -
 
 ![image](https://user-images.githubusercontent.com/51053467/182652925-f3af7dd7-43f0-4ed8-aa65-ae4094574bcf.png)
 
