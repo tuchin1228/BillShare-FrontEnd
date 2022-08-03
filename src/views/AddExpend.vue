@@ -121,7 +121,7 @@ onMounted(() => {
       新增花費
     </h2>
   </div>
-  <main>
+  <main  class="px-2">
     <form class="">
       <div class="mb-6">
         <label for="" class="text-xl font-bold my-2 block">日期</label>

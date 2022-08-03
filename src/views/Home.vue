@@ -231,7 +231,7 @@ onMounted(async() => {
         >編輯群組</RouterLink
       >
     </div>
-    <div>
+    <div class="px-2">
       <article
         class="border border-gray-100 rounded-xl shadow-xl p-3 m-2"
         v-for="item in ExpendData"
@@ -242,7 +242,7 @@ onMounted(async() => {
           NT${{ item.totalAmount }}
         </p>
         <p class="text-right" v-if="item.remark">({{ item.remark }})</p>
-        <p class="text-right">
+        <p class="text-right text-gray-400 ">
           {{ FormatDateTime(item.createdDate) }}
         </p>
         <div class="grid grid-cols-2 gap-2">

@@ -29,13 +29,19 @@ const router = createRouter({
   // history: createWebHistory(
   //   import.meta.env.BASE_URL),
   routes: [
-   
+
+    {
+      path: '/',
+      redirect: {
+        name: 'login'
+      }
+    },
     {
       path: '/grouplist',
       name: 'grouplist',
       component: GroupList
     },
-   
+
     {
       path: '/invite/:GroupId/:ValidateCode',
       name: 'invite',
@@ -94,8 +100,10 @@ router.beforeEach((to, from, next) => {
 
   if (to.name == 'login' || to.name == 'invite' || to.name == 'register' || cookies.get('token')) {
     next()
-  }else{
-    next({ name: 'login' });
+  } else {
+    next({
+      name: 'login'
+    });
   }
 })
 

@@ -10,7 +10,7 @@
       <RouterLink :to="{ name: 'login' }">前往登入</RouterLink>
     </div>
   </main> -->
-  <form class="">
+  <form class="px-2">
     <div class="mb-6">
       <label for="" class="text-xl font-bold my-2 block">帳號：</label>
       <input

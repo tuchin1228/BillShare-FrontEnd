@@ -5,226 +5,214 @@
       群組邀請
     </h2>
   </div>
-  <div class="mb-6">
-    <label for="" class="text-xl font-bold my-2 block">帳號：</label>
-    <input
-      v-model="account"
-      type="text"
-      class="
-        form-control
-        block
-        w-full
-        px-4
-        py-2
-        text-xl
-        font-normal
-        text-gray-700
-        bg-white bg-clip-padding
-        border border-solid border-gray-300
-        rounded
-        transition
-        ease-in-out
-        m-0
-        focus:text-gray-700
-        focus:bg-white
-        focus:border-blue-600
-        focus:outline-none
-      "
-      placeholder="輸入帳號"
-    />
-  </div>
-  <div class="mb-6">
-    <label for="" class="text-xl font-bold my-2 block">密碼：</label>
-    <input
-      v-model="password"
-      type="text"
-      class="
-        form-control
-        block
-        w-full
-        px-4
-        py-2
-        text-xl
-        font-normal
-        text-gray-700
-        bg-white bg-clip-padding
-        border border-solid border-gray-300
-        rounded
-        transition
-        ease-in-out
-        m-0
-        focus:text-gray-700
-        focus:bg-white
-        focus:border-blue-600
-        focus:outline-none
-      "
-      placeholder="輸入密碼"
-    />
-  </div>
-  <div class="mb-6" v-if="ModeSwitch == 'register'">
-    <label for="" class="text-xl font-bold my-2 block">會員名稱：</label>
-    <input
-      v-model="userName"
-      type="text"
-      class="
-        form-control
-        block
-        w-full
-        px-4
-        py-2
-        text-xl
-        font-normal
-        text-gray-700
-        bg-white bg-clip-padding
-        border border-solid border-gray-300
-        rounded
-        transition
-        ease-in-out
-        m-0
-        focus:text-gray-700
-        focus:bg-white
-        focus:border-blue-600
-        focus:outline-none
-      "
-      placeholder="輸入會員名稱"
-    />
-  </div>
+  <div class="px-2">
+    <div class="mb-6">
+      <label for="" class="text-xl font-bold my-2 block">帳號：</label>
+      <input
+        v-model="account"
+        type="text"
+        class="
+          form-control
+          block
+          w-full
+          px-4
+          py-2
+          text-xl
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          focus:text-gray-700
+          focus:bg-white
+          focus:border-blue-600
+          focus:outline-none
+        "
+        placeholder="輸入帳號"
+      />
+    </div>
+    <div class="mb-6">
+      <label for="" class="text-xl font-bold my-2 block">密碼：</label>
+      <input
+        v-model="password"
+        type="text"
+        class="
+          form-control
+          block
+          w-full
+          px-4
+          py-2
+          text-xl
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          focus:text-gray-700
+          focus:bg-white
+          focus:border-blue-600
+          focus:outline-none
+        "
+        placeholder="輸入密碼"
+      />
+    </div>
+    <div class="mb-6" v-if="ModeSwitch == 'register'">
+      <label for="" class="text-xl font-bold my-2 block">會員名稱：</label>
+      <input
+        v-model="userName"
+        type="text"
+        class="
+          form-control
+          block
+          w-full
+          px-4
+          py-2
+          text-xl
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          focus:text-gray-700
+          focus:bg-white
+          focus:border-blue-600
+          focus:outline-none
+        "
+        placeholder="輸入會員名稱"
+      />
+    </div>
+    <div class="grid grid-cols-2 gap-2">
+      <button
+        type="button"
+        class="
+          inline-block
+          my-2
+          px-7
+          py-3
+          bg-gray-400
+          text-white
+          font-medium
+          text-xl
+          leading-snug
+          uppercase
+          rounded
+          shadow-md
+          hover:bg-gray-500 hover:shadow-lg
+          focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-gray-600 active:shadow-lg
+          transition
+          duration-150
+          ease-in-out
+          w-full
+        "
+        data-mdb-ripple="true"
+        data-mdb-ripple-color="light"
+        v-if="ModeSwitch == 'login'"
+        @click="updateMode"
+      >
+        去註冊
+      </button>
+      <button
+        type="button"
+        class="
+          inline-block
+          my-2
+          px-7
+          py-3
+          bg-red-400
+          text-white
+          font-medium
+          text-xl
+          leading-snug
+          uppercase
+          rounded
+          shadow-md
+          hover:bg-red-500 hover:shadow-lg
+          focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-red-600 active:shadow-lg
+          transition
+          duration-150
+          ease-in-out
+          w-full
+        "
+        data-mdb-ripple="true"
+        data-mdb-ripple-color="light"
+        v-if="ModeSwitch == 'login'"
+        @click="LoginInvite"
+      >
+        登入
+      </button>
 
-  <!-- <button type="button">
-    <span v-if="ModeSwitch == 'login'" @click="updateMode">去註冊</span>
-    <span v-if="ModeSwitch == 'register'" @click="updateMode">去登入</span>
-  </button> -->
-  <!-- <input type="text" placeholder="輸入帳號" v-model="account" />
-  <input type="text" placeholder="輸入密碼" v-model="password" /> -->
-  <!-- <input
-    type="text"
-    placeholder="輸入會員名稱"
-    v-if="ModeSwitch == 'register'"
-    v-model="userName"
-  /> -->
-
-  <div class="grid grid-cols-2 gap-2">
-    <button
-      type="button"
-      class="
-        inline-block
-        my-2
-        px-7
-        py-3
-        bg-gray-400
-        text-white
-        font-medium
-        text-xl
-        leading-snug
-        uppercase
-        rounded
-        shadow-md
-        hover:bg-gray-500 hover:shadow-lg
-        focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
-        active:bg-gray-600 active:shadow-lg
-        transition
-        duration-150
-        ease-in-out
-        w-full
-      "
-      data-mdb-ripple="true"
-      data-mdb-ripple-color="light"
-      v-if="ModeSwitch == 'login'"
-      @click="updateMode"
-    >
-      去註冊
-    </button>
-    <button
-      type="button"
-      class="
-        inline-block
-        my-2
-        px-7
-        py-3
-        bg-red-400
-        text-white
-        font-medium
-        text-xl
-        leading-snug
-        uppercase
-        rounded
-        shadow-md
-        hover:bg-red-500 hover:shadow-lg
-        focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0
-        active:bg-red-600 active:shadow-lg
-        transition
-        duration-150
-        ease-in-out
-        w-full
-      "
-      data-mdb-ripple="true"
-      data-mdb-ripple-color="light"
-      v-if="ModeSwitch == 'login'"
-      @click="LoginInvite"
-    >
-      登入
-    </button>
-
-    <button
-      type="button"
-      class="
-        inline-block
-        my-2
-        px-7
-        py-3
-        bg-gray-400
-        text-white
-        font-medium
-        text-xl
-        leading-snug
-        uppercase
-        rounded
-        shadow-md
-        hover:bg-gray-500 hover:shadow-lg
-        focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
-        active:bg-gray-600 active:shadow-lg
-        transition
-        duration-150
-        ease-in-out
-        w-full
-      "
-      data-mdb-ripple="true"
-      data-mdb-ripple-color="light"
-      v-if="ModeSwitch == 'register'"
-      @click="updateMode"
-    >
-      去登入
-    </button>
-    <button
-      type="button"
-      class="
-        inline-block
-        my-2
-        px-7
-        py-3
-        bg-red-400
-        text-white
-        font-medium
-        text-xl
-        leading-snug
-        uppercase
-        rounded
-        shadow-md
-        hover:bg-red-500 hover:shadow-lg
-        focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0
-        active:bg-red-600 active:shadow-lg
-        transition
-        duration-150
-        ease-in-out
-        w-full
-      "
-      data-mdb-ripple="true"
-      data-mdb-ripple-color="light"
-      v-if="ModeSwitch == 'register'"
-      @click="Register"
-    >
-      註冊
-    </button>
+      <button
+        type="button"
+        class="
+          inline-block
+          my-2
+          px-7
+          py-3
+          bg-gray-400
+          text-white
+          font-medium
+          text-xl
+          leading-snug
+          uppercase
+          rounded
+          shadow-md
+          hover:bg-gray-500 hover:shadow-lg
+          focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-gray-600 active:shadow-lg
+          transition
+          duration-150
+          ease-in-out
+          w-full
+        "
+        data-mdb-ripple="true"
+        data-mdb-ripple-color="light"
+        v-if="ModeSwitch == 'register'"
+        @click="updateMode"
+      >
+        去登入
+      </button>
+      <button
+        type="button"
+        class="
+          inline-block
+          my-2
+          px-7
+          py-3
+          bg-red-400
+          text-white
+          font-medium
+          text-xl
+          leading-snug
+          uppercase
+          rounded
+          shadow-md
+          hover:bg-red-500 hover:shadow-lg
+          focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-red-600 active:shadow-lg
+          transition
+          duration-150
+          ease-in-out
+          w-full
+        "
+        data-mdb-ripple="true"
+        data-mdb-ripple-color="light"
+        v-if="ModeSwitch == 'register'"
+        @click="Register"
+      >
+        註冊
+      </button>
+    </div>
   </div>
   <!-- <button type="button" v-if="ModeSwitch == 'login'" @click="LoginInvite">
     登入

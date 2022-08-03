@@ -21,7 +21,7 @@
       新增群組
     </h2>
   </div>
-  <form class="mx-auto">
+  <form class="mx-auto px-2">
     <div class="mb-6">
       <label for="" class="text-xl font-bold my-2 block">群組名稱</label>
       <input

@@ -4,7 +4,7 @@
       新增成員
     </h2>
   </div>
-  <main>
+  <main  class="px-2">
     <!-- <button @click="addUser">產生邀請碼</button> -->
     <ul>
       <li

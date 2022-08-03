@@ -58,63 +58,66 @@ const SplitMan = computed(() => {
       花費詳情
     </h2>
   </div>
+  <div class="px-2">
+    <p class="text-2xl font-bold">
+      {{ FormatDateTime(ExpendData.createdDate) }}
+    </p>
+    <div class="flex justify-between items-center my-2">
+      <h2 class="text-2xl font-bold">
+        {{ ExpendData.itemName }}
+      </h2>
+      <h2 class="text-2xl font-bold text-red-500">
+        NT${{ ExpendData.totalAmount }}
+      </h2>
+    </div>
+    <hr />
+    <ul class="my-2">
+      <li
+        v-for="item in PayMan"
+        :key="item.Id"
+        class="text-xl flex justify-between items-center my-1"
+      >
+        <span>{{ item.userName }} 付了</span>
+        <span>NT$ {{ item.price }}</span>
+      </li>
+    </ul>
 
-  <p class="text-2xl font-bold">{{ FormatDateTime(ExpendData.createdDate) }}</p>
-  <div class="flex justify-between items-center my-2">
-    <h2 class="text-2xl font-bold">
-      {{ ExpendData.itemName }}
-    </h2>
-    <h2 class="text-2xl font-bold text-red-500">
-      NT${{ ExpendData.totalAmount }}
-    </h2>
+    <hr />
+
+    <ul class="my-2">
+      <li
+        v-for="item in SplitMan"
+        :key="item.Id"
+        class="text-xl flex justify-between items-center my-1"
+      >
+        <span>{{ item.userName }} 應該分攤</span>
+        <span>NT$ {{ item.price }}</span>
+      </li>
+    </ul>
+    <RouterLink
+      :to="{ name: 'home' }"
+      class="
+        block
+        text-center
+        my-2
+        p-1
+        bg-gray-400
+        text-white
+        font-medium
+        leading-snug
+        uppercase
+        rounded
+        shadow-md
+        hover:bg-gray-500 hover:shadow-lg
+        focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
+        active:bg-gray-600 active:shadow-lg
+        transition
+        duration-150
+        ease-in-out
+        w-full
+        text-xl
+      "
+      >回上頁</RouterLink
+    >
   </div>
-  <hr />
-  <ul class="my-2">
-    <li
-      v-for="item in PayMan"
-      :key="item.Id"
-      class="text-xl flex justify-between items-center my-1"
-    >
-      <span>{{ item.userName }} 付了</span>
-      <span>NT$ {{ item.price }}</span>
-    </li>
-  </ul>
-
-  <hr />
-
-  <ul class="my-2">
-    <li
-      v-for="item in SplitMan"
-      :key="item.Id"
-      class="text-xl flex justify-between items-center my-1"
-    >
-      <span>{{ item.userName }} 應該分攤</span>
-      <span>NT$ {{ item.price }}</span>
-    </li>
-  </ul>
-  <RouterLink
-    :to="{ name: 'home' }"
-    class="
-      block
-      text-center
-      my-2
-      p-1
-      bg-gray-400
-      text-white
-      font-medium
-      leading-snug
-      uppercase
-      rounded
-      shadow-md
-      hover:bg-gray-500 hover:shadow-lg
-      focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
-      active:bg-gray-600 active:shadow-lg
-      transition
-      duration-150
-      ease-in-out
-      w-full
-      text-xl
-    "
-    >回上頁</RouterLink
-  >
 </template>

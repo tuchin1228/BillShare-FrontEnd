@@ -13,68 +13,73 @@
     </h2>
   </div>
 
-  <article class="grid grid-cols-2">
-    <RouterLink
-      :to="{ name: 'home', params: { groupId: group.groupId } }"
-      v-for="group in GroupList"
-      :key="group.id"
-      class="relative rounded-xl overflow-hidden m-3"
-      :style="[
-        group.groupBanner
-          ? {
-              backgroundImage: `url(
+  <div class="px-2">
+    <article class="grid grid-cols-2">
+      <RouterLink
+        :to="{ name: 'home', params: { groupId: group.groupId } }"
+        v-for="group in GroupList"
+        :key="group.id"
+        class="relative rounded-xl overflow-hidden m-3"
+        :style="[
+          group.groupBanner
+            ? {
+                backgroundImage: `url(
                 ${API_URL}/groupImages/${group.groupBanner}
               )`,
-            }
-          : {
-              background: '#e1e1e1',
-            },
-        { height: '200px' ,backgroundPosition:'center',backgroundSize:'cover' },
-      ]"
-    >
-      <!-- , -->
-      <!-- {{ group.groupName }} --
+              }
+            : {
+                background: '#e1e1e1',
+              },
+          {
+            height: '200px',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+          },
+        ]"
+      >
+        <!-- , -->
+        <!-- {{ group.groupName }} --
       <RouterLink :to="{ name: 'home', params: { groupId: group.groupId } }"
         >查看</RouterLink
       > -->
 
-      <div class="bg-black bg-opacity-70 absolute bottom-0 left-0 w-full p-2">
-        <div class="text-xl text-white">
-          {{ group.groupName }}
+        <div class="bg-black bg-opacity-70 absolute bottom-0 left-0 w-full p-2">
+          <div class="text-xl text-white">
+            {{ group.groupName }}
+          </div>
         </div>
-      </div>
-    </RouterLink>
-  </article>
-  <button
-    type="button"
-    class="
-      inline-block
-      my-2
-      px-7
-      py-3
-      bg-gray-400
-      text-white
-      font-medium
-      text-xl
-      leading-snug
-      uppercase
-      rounded
-      shadow-md
-      hover:bg-gray-500 hover:shadow-lg
-      focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
-      active:bg-gray-600 active:shadow-lg
-      transition
-      duration-150
-      ease-in-out
-      w-full
-    "
-    data-mdb-ripple="true"
-    data-mdb-ripple-color="light"
-    @click="logout"
-  >
-    登出
-  </button>
-
+      </RouterLink>
+    </article>
+    <button
+      type="button"
+      class="
+        inline-block
+        my-2
+        px-7
+        py-3
+        bg-gray-400
+        text-white
+        font-medium
+        text-xl
+        leading-snug
+        uppercase
+        rounded
+        shadow-md
+        hover:bg-gray-500 hover:shadow-lg
+        focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
+        active:bg-gray-600 active:shadow-lg
+        transition
+        duration-150
+        ease-in-out
+        w-full
+      "
+      data-mdb-ripple="true"
+      data-mdb-ripple-color="light"
+      @click="logout"
+    >
+      登出
+    </button>
+  </div>
   <div class="absolute bottom-20 right-20">
     <RouterLink
       :to="{ name: 'addGroup' }"
@@ -104,7 +109,7 @@ import { RouterLink, useRouter } from "vue-router";
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 const router = useRouter();
-const API_URL = ref(process.env.API_URL)
+const API_URL = ref(process.env.API_URL);
 let GroupList = reactive([]);
 let userId = ref();
 let GroupName = ref();

@@ -249,8 +249,8 @@ const DeleteCheckout = async (CheckoutId) => {
       }
     });
   console.log(res);
-  if(res.data.success){
-    location.reload()
+  if (res.data.success) {
+    location.reload();
   }
 };
 
@@ -277,12 +277,74 @@ onMounted(async () => {
         結算
       </h2>
     </div>
-
-    <article class="border border-gray-100 rounded-xl shadow-lg p-3 my-2">
-      <p class="text-xl font-bold">欠款合計</p>
-      <div v-for="item in ArrearArray" :key="item.userId" class="py-1 my-1">
-        <div v-for="(user, index) in item.checkout" :key="index">
-          <p
+    <div class="px-2">
+      <article class="border border-gray-100 rounded-xl shadow-lg p-3 my-2">
+        <p class="text-xl font-bold">欠款合計</p>
+        <div v-for="item in ArrearArray" :key="item.userId" class="py-1 my-1">
+          <div v-for="(user, index) in item.checkout" :key="index">
+            <p
+              class="
+                text-xl
+                flex
+                justify-between
+                items-center
+                my-1
+                border-b border-gray-200
+                py-2
+              "
+              v-if="user.price > 0"
+            >
+              <span>
+                <span class="text-blue-600 font-bold">{{ item.userName }}</span>
+                欠
+                <span class="text-blue-600 font-bold">{{
+                  user.user.userName
+                }}</span>
+              </span>
+              <span class=""
+                ><span class="text-red-600 font-bold block text-right"
+                  >{{ user.price }}元</span
+                >
+                <button
+                  v-if="userId == user.user.userId"
+                  @click="ReturnPay(item.userId, user.user.userId, user.price)"
+                  type="button"
+                  class="
+                    text-center
+                    p-1
+                    bg-red-400
+                    text-white
+                    leading-snug
+                    uppercase
+                    rounded
+                    font-bold
+                    shadow-md
+                    hover:bg-red-500 hover:shadow-lg
+                    focus:bg-red-500
+                    focus:shadow-lg
+                    focus:outline-none
+                    focus:ring-0
+                    active:bg-red-600 active:shadow-lg
+                    transition
+                    duration-150
+                    ease-in-out
+                    w-full
+                    text-lg
+                  "
+                >
+                  已還款
+                </button>
+              </span>
+            </p>
+          </div>
+        </div>
+      </article>
+      <article class="border border-gray-100 rounded-xl shadow-lg p-3 my-2">
+        <p class="text-xl font-bold">還款紀錄</p>
+        <ul>
+          <li
+            v-for="item in receiveData"
+            :key="item.id"
             class="
               text-xl
               flex
@@ -292,24 +354,26 @@ onMounted(async () => {
               border-b border-gray-200
               py-2
             "
-            v-if="user.price > 0"
           >
-            <span>
-              <span class="text-blue-600 font-bold">{{ item.userName }}</span>
-              欠
-              <span class="text-blue-600 font-bold">{{
-                user.user.userName
+            <div>
+              <span
+                v-html="GetReceiveUser(item.sendUserId, item.receiveUserId)"
+              ></span
+              ><br />
+              <span class="text-gray-400 text-lg">{{
+                FormatDateTime(item.createdDate)
               }}</span>
-            </span>
-            <span class=""
-              ><span class="text-red-600 font-bold block text-right"
-                >{{ user.price }}元</span
+            </div>
+            <span>
+              <span class="text-red-600 font-bold block text-center"
+                >{{ item.amount }}元</span
               >
               <button
-                v-if="userId == user.user.userId"
-                @click="ReturnPay(item.userId, user.user.userId, user.price)"
                 type="button"
+                @click="DeleteCheckout(item.id)"
+                v-if="userId == item.sendUserId"
                 class="
+                  block
                   text-center
                   p-1
                   bg-red-400
@@ -332,100 +396,40 @@ onMounted(async () => {
                   text-lg
                 "
               >
-                已還款
+                刪除還款
               </button>
             </span>
-          </p>
-        </div>
-      </div>
-    </article>
-    <article class="border border-gray-100 rounded-xl shadow-lg p-3 my-2">
-      <p class="text-xl font-bold">還款紀錄</p>
-      <ul>
-        <li
-          v-for="item in receiveData"
-          :key="item.id"
-          class="
-            text-xl
-            flex
-            justify-between
-            items-center
-            my-1
-            border-b border-gray-200
-            py-2
-          "
-        >
-          <div>
-            <span
-              v-html="GetReceiveUser(item.sendUserId, item.receiveUserId)"
-            ></span
-            ><br />
-            <span class="text-gray-400 text-lg">{{
-              FormatDateTime(item.createdDate)
-            }}</span>
-          </div>
-          <span>
-            <span class="text-red-600 font-bold block text-center"
-              >{{ item.amount }}元</span
-            >
-            <button
-              type="button"
-              @click="DeleteCheckout(item.id)"
-              v-if="userId == item.sendUserId"
-              class="
-                block
-                text-center
-                p-1
-                bg-red-400
-                text-white
-                leading-snug
-                uppercase
-                rounded
-                font-bold
-                shadow-md
-                hover:bg-red-500 hover:shadow-lg
-                focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0
-                active:bg-red-600 active:shadow-lg
-                transition
-                duration-150
-                ease-in-out
-                w-full
-                text-lg
-              "
-            >
-              刪除還款
-            </button>
-          </span>
-          <!-- {{item.sendUserId}} 還 {{item.receiveUserId}} {{item.amount}}元 -->
-        </li>
-      </ul>
-    </article>
+            <!-- {{item.sendUserId}} 還 {{item.receiveUserId}} {{item.amount}}元 -->
+          </li>
+        </ul>
+      </article>
 
-    <RouterLink
-      :to="{ name: 'home' }"
-      class="
-        block
-        text-center
-        my-2
-        p-1
-        bg-gray-400
-        text-white
-        font-medium
-        leading-snug
-        uppercase
-        rounded
-        shadow-md
-        hover:bg-gray-500 hover:shadow-lg
-        focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
-        active:bg-gray-600 active:shadow-lg
-        transition
-        duration-150
-        ease-in-out
-        w-full
-        text-xl
-      "
-      >回上頁</RouterLink
-    >
+      <RouterLink
+        :to="{ name: 'home' }"
+        class="
+          block
+          text-center
+          my-2
+          p-1
+          bg-gray-400
+          text-white
+          font-medium
+          leading-snug
+          uppercase
+          rounded
+          shadow-md
+          hover:bg-gray-500 hover:shadow-lg
+          focus:bg-gray-500 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-gray-600 active:shadow-lg
+          transition
+          duration-150
+          ease-in-out
+          w-full
+          text-xl
+        "
+        >回上頁</RouterLink
+      >
+    </div>
   </main>
 </template>
 
